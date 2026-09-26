@@ -1,42 +1,63 @@
-# Multi-Format Document Analysis Tool
+# Multi-Format Document Analysis Tool (FastAPI + Glassmorphism)
 
-A Python-based web application built with Gradio that performs comprehensive linguistic and statistical analysis on text extracted from various document formats (`.txt`, `.docx`, `.pdf`, `.pptx`).
+A high-performance web application that performs comprehensive linguistic and statistical analysis on text extracted from various document formats (`.txt`, `.docx`, `.pdf`, `.pptx`).
 
-## Features
+## 🚀 Architecture
+This project has been modularized and upgraded from a monolithic script into a modern Web App architecture:
+- **Backend (Python / FastAPI):** Utilizes `asyncio` and `ThreadPoolExecutor` to run heavy ML parsing, summarization, and statistic generations concurrently, avoiding event-loop blocking for rapid real-time analysis.
+- **Frontend (HTML / CSS / Vanilla JS):** A zero-dependency, ultra-lightweight UI featuring beautiful glassmorphism, dynamic skeleton loaders, staggered reveal animations, and a seamless dark mode.
+
+## ✨ Features
 - **Multi-Format Extraction:** Extracts text from plain text, Word documents, PDFs, and PowerPoint presentations.
+- **Concurrency Optimized:** Asynchronously processes Document Summarization, Sentiment Analysis, and NLP Tagging.
 - **NLP Analysis:** Uses `spaCy` to perform Part-of-Speech tagging and extract keywords.
 - **Interactive Highlighting:** Visually highlights different parts of speech directly in the text.
-- **Text Statistics:** Calculates word counts, sentence counts, and readability scores.
+- **Data Export:** Export your results seamlessly into `.csv` format or save a beautiful print-optimized `.pdf` report.
 - **Visualizations:** Generates word clouds based on important extracted keywords.
-- **Summarization:** Provides an extractive summary of the document.
-- **Sentiment Analysis:** Evaluates the polarity and subjectivity of the text using `TextBlob`.
 
-## Project Structure
-- `app.py`: Main entry point containing the Gradio web interface.
-- `extractor.py`: Functions for parsing and extracting text from different file formats.
-- `nlp_processor.py`: Core NLP logic using `spaCy` for tokenization and POS tagging.
-- `summarizer.py`: Logic for ranking sentences and generating extractive summaries.
-- `analyzer.py`: Functions for sentiment analysis, readability scoring, and word cloud generation.
-- `requirements.txt`: Python dependencies.
+## 📂 Project Structure
+```
+backend/
+├── main.py                 # FastAPI application and routing
+├── extractor.py            # File parsing for PDF, DOCX, PPTX
+├── nlp_core.py             # Singleton SpaCy model loader
+└── modules/
+    ├── highlight.py        # POS color-tagging HTML generator
+    ├── pos_stats.py        # Keyword and POS parsing
+    ├── readability.py      # Flesch reading ease scoring
+    ├── sentiment.py        # TextBlob polarity and subjectivity
+    ├── statistics.py       # General text metrics
+    ├── summarizer.py       # Extractive NLP summarization
+    └── wordcloud_gen.py    # Matplotlib WordCloud generator
+frontend/
+├── index.html              # Main HTML markup
+├── script.js               # Logic for API calls, Theme toggling, and Exports
+└── style.css               # Advanced animations, skeleton loaders, and print layouts
+```
 
-## Installation & Setup
+## 🛠️ Installation & Setup
 
-1. **Clone the repository** (or download the files).
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/NihasRamSunku/Multi-Format-Document-Analysis.git
+   cd Multi-Format-Document-Analysis
+   ```
+
 2. **Install dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
+
 3. **Download Language Models & Corpora:**
    ```bash
    python -m textblob.download_corpora
    python -m spacy download en_core_web_sm
-   python -m spacy download en_core_web_trf
    ```
-   *(Note: If `en_core_web_trf` is too large or fails, the app will gracefully fall back to `en_core_web_sm`)*
 
-## Running the Application
-Run the main script to launch the Gradio web interface:
+## ⚡ Running the Application
+Launch the FastAPI server which automatically serves the frontend directory:
 ```bash
-python app.py
+python backend/main.py
 ```
-Open the provided local URL (usually `http://127.0.0.1:7860`) in your web browser.
+Open the application in your web browser:
+**👉 http://127.0.0.1:8000/app**
